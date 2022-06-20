@@ -8,7 +8,7 @@ class Color(Enum):
 
     def sign(self):
         if self == Color.EMPTY:
-            return ' - '
+            return ' • '
         elif self == Color.BLACK:
             return ' X '
         else:
@@ -31,11 +31,20 @@ class Gomoku:
 
     def print(self):
         print("")
-        for row in self.board:
-            line = ''
-            for element in row:
+        line = '  '
+        for i in range(self.ySize):
+            line = line + ' ' + str(i) + ' '
+        print(line)
+        for i in range(self.xSize):
+            line = str(i) + ' '
+            for element in self.board[i]:
                 line = line + element.sign()
+            line = line + ' ' + str(i)
             print(line)
+        line = '  '
+        for i in range(self.ySize):
+            line = line + ' ' + str(i) + ' '
+        print(line)
 
     def put(self, point, color):
         x = point[0]
@@ -113,12 +122,11 @@ class Gomoku:
         if not y.isnumeric():
             print("y is not numeric")
             return False
-        move = (int(x), int(y))
 
+        move = (int(x), int(y))
         if not self.is_in_side(move):
             print("Field is out side of the board")
             return False
-
         if not self.is_empty(move):
             print("Field is already taken")
             return False
